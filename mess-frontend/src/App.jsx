@@ -1,27 +1,25 @@
-import './App.css';
-import { useDispatch } from "react-redux";
-import { useSelector } from 'react-redux';
-import { increment, decrement, reset } from "./redux/counterSlice";
-
-const CounterButtons = () => {
-  const dispatch = useDispatch();
-  const count = useSelector((state) => state.counter.value);
-  return (
-    <>
-    <h1>{count}</h1>
-    <div>
-      <button onClick={() => dispatch(increment())}>+</button>
-      <button onClick={() => dispatch(decrement())}>-</button>
-      <button onClick={() => dispatch(reset())}>Reset</button>
-    </div>
-    </>
-  );
-};
+import { Link, Routes, Route } from "react-router-dom";
+import { Home } from "./Pages/Home";
+import { Login } from "./Pages/Login";
+import { PrivateRoute } from "./components/private_routing";
+import { Navigate } from "react-router-dom";
+import { useAuth} from "./context/context_rout";
 
 function App() {
+  const{isAuthenticated} = useAuth();
   return (
     <>
-    {CounterButtons()}
+      <Link to="/login">Login</Link>
+      <Link to="/">Home</Link>
+
+      <Routes>
+        <Route path="/login" element={isAuthenticated ? <Navigate to="/" replace /> : <Login />}/>
+        <Route element={<PrivateRoute />}>
+          <Route path="/" element={<Home />} />
+          <Route path="*" element={<Navigate to="/" replace />} />
+          
+        </Route>
+      </Routes>
     </>
   );
 }
