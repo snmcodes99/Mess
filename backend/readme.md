@@ -41,7 +41,7 @@ Create a `.env` file in the `backend/` folder.
 PORT=5000
 AUTH0_DOMAIN=dev-sr21y2n6y7zoznzf.us.auth0.com
 AUTH0_AUDIENCE=https://mess-api.com
-
+MONGO_URI=mongodb+srv://sahilnegipw_db_user:B1TTd9uxXzZu5LnX@cluster0.wipr7cx.mongodb.net/messDB?retryWrites=true&w=majority
 
 ---
 
