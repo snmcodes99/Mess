@@ -1,7 +1,7 @@
 {
   "name": "backend",
   "version": "1.0.0",
-  "description": "",
+  "description": "Node.js backend for a Mess Management system using **Express**, **MongoDB**, and **Auth0 JWT authentication**.  \r Follows a clean **MVC + Service architecture** so new features can be added easily.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -9,5 +9,13 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "commonjs"
+  "type": "commonjs",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "express": "^5.2.1",
+    "express-jwt": "^8.5.1",
+    "jwks-rsa": "^3.2.0",
+    "mongoose": "^9.0.1"
+  }
 }
