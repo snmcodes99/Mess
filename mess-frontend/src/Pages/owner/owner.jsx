@@ -1,11 +1,69 @@
-import React from "react";
+import React, { useState } from "react";
 import "./owner.css";
 
 export default function MessForm() {
+  const [formData, setFormData] = useState({
+    messName: "",
+    ownerName: "",
+    locality: "",
+    contact: "",
+    foodType: "",
+    price: "",
+    meals: {
+      breakfast: false,
+      lunch: false,
+      dinner: false,
+    },
+    kitchenType: "",
+    cleanliness: "",
+    days: [],
+  });
+
+  const handleChange = (e) => {
+    const { name, value, type, checked } = e.target;
+
+   
+    if (name === "days") {
+      setFormData((prev) => ({
+        ...prev,
+        days: checked
+          ? [...prev.days, value]
+          : prev.days.filter((d) => d !== value),
+      }));
+      return;
+    }
+
+    
+    if (type === "checkbox") {
+      setFormData((prev) => ({
+        ...prev,
+        meals: {
+          ...prev.meals,
+          [name]: checked,
+        },
+      }));
+      return;
+    }
+
+   
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+  
+    console.log("Final JSON:", JSON.stringify(formData, null, 2));
+
+    alert("Check Console (F12 → Console) to see JSON output");
+  };
+
   return (
     <div className="page">
 
-      {/* HEADER SECTION */}
       <div className="header">
         <h1>List Your Mess</h1>
         <p className="subtitle">
@@ -13,45 +71,108 @@ export default function MessForm() {
         </p>
       </div>
 
-      <form className="form">
+      <form className="form" onSubmit={handleSubmit}>
 
-        {/* BASIC DETAILS */}
+      
         <section className="card">
           <h2>Basic Details</h2>
 
-          <input type="text" placeholder="Mess Name" />
-          <input type="text" placeholder="Owner Name" />
-          <input type="text" placeholder="Locality / Area" />
-          <input type="text" placeholder="Contact No" />
+          <input
+            type="text"
+            placeholder="Mess Name"
+            name="messName"
+            value={formData.messName}
+            onChange={handleChange}
+          />
+          <input
+            type="text"
+            placeholder="Owner Name"
+            name="ownerName"
+            value={formData.ownerName}
+            onChange={handleChange}
+          />
+          <input
+            type="text"
+            placeholder="Locality / Area"
+            name="locality"
+            value={formData.locality}
+            onChange={handleChange}
+          />
+          <input
+            type="text"
+            placeholder="Contact No"
+            name="contact"
+            value={formData.contact}
+            onChange={handleChange}
+          />
 
           <div className="radio-row">
             <label>
-              <input type="radio" name="food" /> Veg
+              <input
+                type="radio"
+                name="foodType"
+                value="Veg"
+                checked={formData.foodType === "Veg"}
+                onChange={handleChange}
+              /> Veg
             </label>
             <label>
-              <input type="radio" name="food" /> Non-Veg
+              <input
+                type="radio"
+                name="foodType"
+                value="Non-Veg"
+                checked={formData.foodType === "Non-Veg"}
+                onChange={handleChange}
+              /> Non-Veg
             </label>
             <label>
-              <input type="radio" name="food" /> Both
+              <input
+                type="radio"
+                name="foodType"
+                value="Both"
+                checked={formData.foodType === "Both"}
+                onChange={handleChange}
+              /> Both
             </label>
           </div>
         </section>
 
-        {/* FOOD & PRICING */}
+       
         <section className="card">
           <h2>Food & Pricing Details</h2>
 
-          <input type="text" placeholder="Monthly Pricing" />
+          <input
+            type="text"
+            placeholder="Monthly Pricing"
+            name="price"
+            value={formData.price}
+            onChange={handleChange}
+          />
 
           <div className="radio-col">
             <label>
-              <input type="checkbox" /> Breakfast
+              <input
+                type="checkbox"
+                name="breakfast"
+                checked={formData.meals.breakfast}
+                onChange={handleChange}
+              /> Breakfast
             </label>
             <label>
-              <input type="checkbox" /> Lunch
+              <input
+                type="checkbox"
+                name="lunch"
+                checked={formData.meals.lunch}
+                onChange={handleChange}
+              /> Lunch
             </label>
             <label>
-              <input type="checkbox" /> Dinner
+              <input
+                type="checkbox"
+                name="dinner"
+                checked={formData.meals.dinner}
+                onChange={handleChange}
+              /> Dinner
             </label>
           </div>
 
@@ -61,27 +182,51 @@ export default function MessForm() {
           </label>
         </section>
 
-        {/* HYGIENE & AVAILABILITY */}
+       
         <section className="card">
           <h2>Hygiene & Availability</h2>
 
           <h4>Kitchen Type</h4>
           <div className="radio-col">
             <label>
-              <input type="radio" name="kitchen" /> Home Kitchen
+              <input
+                type="radio"
+                name="kitchenType"
+                value="Home Kitchen"
+                checked={formData.kitchenType === "Home Kitchen"}
+                onChange={handleChange}
+              /> Home Kitchen
             </label>
             <label>
-              <input type="radio" name="kitchen" /> Commercial Kitchen
+              <input
+                type="radio"
+                name="kitchenType"
+                value="Commercial Kitchen"
+                checked={formData.kitchenType === "Commercial Kitchen"}
+                onChange={handleChange}
+              /> Commercial Kitchen
             </label>
           </div>
 
           <h4>Cleanliness Commitment</h4>
           <div className="radio-col">
             <label>
-              <input type="radio" name="clean" /> Daily Cleaning
+              <input
+                type="radio"
+                name="cleanliness"
+                value="Daily Cleaning"
+                checked={formData.cleanliness === "Daily Cleaning"}
+                onChange={handleChange}
+              /> Daily Cleaning
             </label>
             <label>
-              <input type="radio" name="clean" /> Weekly Cleaning
+              <input
+                type="radio"
+                name="cleanliness"
+                value="Weekly Cleaning"
+                checked={formData.cleanliness === "Weekly Cleaning"}
+                onChange={handleChange}
+              /> Weekly Cleaning
             </label>
           </div>
 
@@ -89,13 +234,18 @@ export default function MessForm() {
           <div className="days">
             {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map((d) => (
               <label key={d}>
-                <input type="checkbox" /> {d}
+                <input
+                  type="checkbox"
+                  name="days"
+                  value={d}
+                  checked={formData.days.includes(d)}
+                  onChange={handleChange}
+                /> {d}
               </label>
             ))}
           </div>
         </section>
 
-        {/* INFO */}
         <section className="card info">
           🔒 Your details are safe  
           <br />
@@ -104,8 +254,10 @@ export default function MessForm() {
           ✅ Only verified messes go live
         </section>
 
-        {/* FINAL SUBMIT */}
         <button className="submit">Submit For Verification</button>
+
+       
+
       </form>
     </div>
   );
