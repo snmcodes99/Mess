@@ -2,6 +2,7 @@ import "./login.css";
 import loginBg from "../../assets/login-bg.jpg";
 import { FaUser, FaLock, FaEye } from "react-icons/fa";
 import { useAuth} from "../../context/context_rout"
+import { useNavigate } from "react-router-dom";   
 
 
 const Login = () => {
@@ -9,6 +10,8 @@ const Login = () => {
     const onlogClick=()=>{
         setIsAuthenticated(!isAuthenticated);
     }
+    
+  const navigate = useNavigate();
   return (
     <div className="login-wrapper">
       {/* LEFT IMAGE SECTION */}
@@ -70,7 +73,11 @@ const Login = () => {
 
           <button className="login-btn" onClick={onlogClick} >LOGIN</button>
 
-          <p className="bottom-text">
+<p
+            className="bottom-text"
+            style={{ cursor: "pointer", textDecoration: "underline" }}
+            onClick={() => navigate("/owner")}
+          >
             DON'T HAVE ANY ACCOUNT?
           </p>
         </div>
