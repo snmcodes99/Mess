@@ -1,9 +1,14 @@
 import "./login.css";
 import loginBg from "../../assets/login-bg.jpg";
 import { FaUser, FaLock, FaEye } from "react-icons/fa";
+import { useAuth} from "../../context/context_rout"
 
 
 const Login = () => {
+  const{isAuthenticated,setIsAuthenticated} = useAuth();
+    const onlogClick=()=>{
+        setIsAuthenticated(!isAuthenticated);
+    }
   return (
     <div className="login-wrapper">
       {/* LEFT IMAGE SECTION */}
@@ -63,7 +68,7 @@ const Login = () => {
             <a href="#">Forgot password?</a>
           </div>
 
-          <button className="login-btn">LOGIN</button>
+          <button className="login-btn" onClick={onlogClick} >LOGIN</button>
 
           <p className="bottom-text">
             DON'T HAVE ANY ACCOUNT?
